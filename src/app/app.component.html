@@ -1,0 +1,34 @@
+<main class="flex min-h-screen flex-col items-center justify-between p-16">
+  <div class="bg-white px-24 py-10 rounded-xl mt-10 flex flex-col items-center">
+    <h1 class="text-3xl">{{title}}</h1>
+    <div class="mt-4 flex gap-4">
+
+      <button (click)="openWorkoutForm()" class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-700">Open Workout Form</button>
+      <button (click)="openWorkoutList()" class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-700">Open Workout List</button>
+    </div>
+    <div class="container mt-5 mx-auto p-4 bg-transparent  rounded-lg max-w-4xl">
+
+
+      <ng-container *ngIf="(appService.displayComponent$ | async) === 'workout-form'">
+
+        <app-workout-form></app-workout-form>
+      </ng-container>
+
+      <ng-container *ngIf="(appService.displayComponent$ | async) === 'workout-list'">
+
+        <app-workout-list></app-workout-list>
+      </ng-container>
+    </div>
+    <div class="">
+
+    </div>
+  </div>
+  <div class="flex flex-row items-center justify-between mt-5 bg-white rounded-xl">
+    <div class="mx-5"><app-comments-form></app-comments-form></div>
+    <div class="mx-5"><app-comments-display></app-comments-display></div>
+
+  </div>
+
+
+
+</main>

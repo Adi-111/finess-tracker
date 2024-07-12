@@ -1,0 +1,76 @@
+<div class="container mx-auto p-6 bg-white shadow-lg rounded-lg max-w-4xl">
+  <h1 class="text-3xl font-bold mb-6 text-center text-gray-800">User Workout List</h1>
+
+  <!-- Search by name -->
+  <div class="mb-4">
+    <input
+      type="text"
+      placeholder="Search by name"
+      [(ngModel)]="searchName"
+      (ngModelChange)="searchNameSubject.next($event)"
+      class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+    />
+  </div>
+
+  <!-- Filter by workout type -->
+  <div class="mb-4">
+    <select
+      [(ngModel)]="filterType"
+      (change)="updatePagination()"
+      class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+    >
+      <option value="">Filter by workout type</option>
+      <option *ngFor="let type of workoutTypes" [value]="type">{{ type }}</option>
+    </select>
+  </div>
+
+  <!-- Table with paginated and filtered data -->
+  <div class="overflow-x-auto">
+    <table class="min-w-full bg-white">
+      <thead>
+        <tr class="bg-gray-100">
+          <th class="py-3 px-4 cursor-pointer text-left" (click)="setSortColumn('name')">User Name</th>
+          <th class="py-3 px-4 text-left">Workout Type</th>
+          <th class="py-3 px-4 text-left">Minutes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngFor="let user of paginatedUsers">
+          <tr *ngFor="let workout of user.workouts; let i = index" class="border-t">
+            <td *ngIf="i === 0" [attr.rowspan]="user.workouts.length" class="border px-4 py-3 align-top">
+              {{ user.name }}
+            </td>
+            <td class="border px-4 py-3">{{ workout.type }}</td>
+            <td class="border px-4 py-3">{{ workout.minutes }}</td>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Pagination buttons -->
+  <div class="mt-6 flex justify-between">
+    <button
+      (click)="previousPage()"
+      [disabled]="currentPage === 1"
+      class="px-4 py-2 bg-gray-500 text-white rounded-lg disabled:bg-gray-300"
+    >
+      Previous
+    </button>
+    <button
+      (click)="nextPage()"
+      [disabled]="currentPage * itemsPerPage >= filteredUsers.length"
+      class="px-4 py-2 bg-blue-500 text-white rounded-lg disabled:bg-gray-300"
+    >
+      Next
+    </button>
+  </div>
+
+  <!-- Workout Statistics -->
+  <div class="mt-10">
+    <h2 class="text-2xl font-bold mb-4 text-center text-gray-800">Workout Statistics</h2>
+    <canvas id="workoutChart" class="w-full ">
+
+    </canvas>
+  </div>
+</div>

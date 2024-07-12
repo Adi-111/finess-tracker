@@ -1,0 +1,33 @@
+<div class="my-4">
+  <!-- Comments List -->
+  <div *ngIf="pagedComments.length > 0">
+    <div *ngFor="let comment of pagedComments" class="bg-white shadow-md rounded-md mb-4">
+      <div class="p-4">
+        <p class="text-gray-800 font-semibold">{{ comment.email }}</p>
+        <p class="text-gray-600">{{ comment.comment }}</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- No Comments Message -->
+  <div *ngIf="pagedComments.length === 0" class="text-gray-600 text-center py-4">
+    No comments available.
+  </div>
+
+  <!-- Pagination Buttons -->
+  <div class="mt-4 flex justify-between items-center">
+    <button class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 focus:outline-none"
+            (click)="prevPage()" [disabled]="currentPage === 1"
+            [class.opacity-50]="currentPage === 1">
+      Previous
+    </button>
+    <div class="text-gray-600">
+      Page {{ currentPage }} of {{ totalPages }}
+    </div>
+    <button class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 focus:outline-none"
+            (click)="nextPage()" [disabled]="currentPage === totalPages"
+            [class.opacity-50]="currentPage === totalPages">
+      Next
+    </button>
+  </div>
+</div>
